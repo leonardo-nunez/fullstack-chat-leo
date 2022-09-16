@@ -1,0 +1,17 @@
+{
+  "name": "fullstack-chat-leo",
+  "version": "1.0.0",
+  "description": "Chat app using react, express and sockets",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon index.js"
+  },
+  "author": "Leonardo Nunez",
+  "license": "ISC",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.18.1",
+    "nodemon": "^2.0.19",
+    "socket.io": "^4.5.2"
+  }
+}
