@@ -20,7 +20,7 @@ const Login = ({
     if (userName) {
       socket.emit('login', userName);
       socket.on('logged_in', (message) => {
-        if (!message.username) {
+        if (!message.userName) {
           seterrorMessage(message.error);
           return setTimeout(() => {
             seterrorMessage('');

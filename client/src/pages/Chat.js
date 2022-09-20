@@ -26,6 +26,7 @@ const Chat = ({ isLoggedIn, setIsLoggedIn, userName, socket }) => {
         ':' +
         new Date(Date.now()).getMinutes(),
     };
+    setMessageList((list) => [...list, objToSend]);
     socket.emit('send_message', objToSend);
   };
 

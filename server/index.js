@@ -10,12 +10,12 @@ const server = createServer(app);
 
 const users = [];
 
-const addUser = (id, username) => {
-  const multipleUser = users.find((user) => user.username === username);
+const addUser = (id, userName) => {
+  const multipleUser = users.find((user) => user.userName === userName);
   if (multipleUser) {
     return { error: 'Username is taken. Choose a new one' };
   }
-  const user = { id, username };
+  const user = { id, userName };
   users.push(user);
   return user;
 };
@@ -36,11 +36,13 @@ io.on('connection', (socket) => {
   console.log(`User connected: ${socket.id}`);
 
   socket.on('login', (userName) => {
-    socket.emit('logged_in', addUser(socket.id, userName));
-    socket.broadcast.emit('receive_message', {
-      serverMessage: userName + ' joined the chat',
-    });
-
+    const userDetails = addUser(socket.id, userName);
+    socket.emit('logged_in', userDetails);
+    if (userDetails.userName) {
+      socket.broadcast.emit('receive_message', {
+        serverMessage: userDetails.userName + ' joined the chat',
+      });
+    }
     console.log('users: ', users);
   });
 
@@ -55,11 +57,12 @@ io.on('connection', (socket) => {
   socket.on('disconnect', (reason) => {
     console.log(`User ${socket.id} disconnected. Reason: ${reason}`);
     const removedUser = users.find((user) => user.id === socket.id);
-    removeUser(socket.id);
     removedUser &&
       socket.broadcast.emit('receive_message', {
-        serverMessage: removedUser.username + ' disconnected',
+        serverMessage: removedUser.userName + ' disconnected',
       });
+    removeUser(socket.id);
+    console.log('users: ', users);
   });
 });
 
