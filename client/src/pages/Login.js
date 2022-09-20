@@ -4,9 +4,9 @@ import { useNavigate } from 'react-router-dom';
 const Login = ({ isLoggedIn, setIsLoggedIn, userName, setUserName }) => {
   const navigate = useNavigate();
 
-  // useEffect(() => {
-  //   isLoggedIn && navigate('/chat');
-  // }, []);
+  useEffect(() => {
+    isLoggedIn && navigate('/chat');
+  }, []);
 
   const logIn = () => {
     if (userName) {
