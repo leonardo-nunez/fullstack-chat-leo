@@ -11,14 +11,19 @@ const Chat = ({ isLoggedIn, setIsLoggedIn, userName, socket }) => {
   }, [isLoggedIn, navigate]);
 
   useEffect(() => {
+    // UseEffect if firing too many times
     socket.on('receive_message', (message) => {
-      setMessageList((list) => [...list, message]);
+      setMessageList((list) => [
+        ...list.filter((m) => m.id !== message.id),
+        message,
+      ]);
       console.log('messageList set');
     });
   }, [socket]);
 
   const sendMessage = () => {
     const objToSend = {
+      id: new Date(Date.now()),
       userName,
       message: messageToSend,
       time:
