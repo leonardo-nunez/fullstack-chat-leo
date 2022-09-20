@@ -1,19 +1,27 @@
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-const Login = ({ isLoggedIn, setIsLoggedIn, userName, setUserName }) => {
+const Login = ({
+  isLoggedIn,
+  setIsLoggedIn,
+  userName,
+  setUserName,
+  socket,
+}) => {
   const navigate = useNavigate();
 
   useEffect(() => {
     isLoggedIn && navigate('/chat');
-  }, []);
+  }, [isLoggedIn, navigate]);
 
   const logIn = () => {
+    !socket.connected && socket.connect();
     if (userName) {
       setIsLoggedIn(true);
       navigate('/chat');
     }
   };
+
   return (
     <div>
       <input

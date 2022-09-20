@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import './App.css';
 import io from 'socket.io-client';
@@ -23,6 +23,7 @@ function App() {
               setIsLoggedIn={setIsLoggedIn}
               userName={userName}
               setUserName={setUserName}
+              socket={socket}
             />
           }
         />

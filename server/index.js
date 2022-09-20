@@ -20,15 +20,15 @@ io.on('connection', (socket) => {
 
   socket.on(
     'send_message',
-    (message) => (
-      console.log(`Sent message: ${message}`),
-      socket.broadcast.emit('receive_message', message)
+    (obj) => (
+      console.log(`Sent message: ${obj.message}`),
+      socket.broadcast.emit('receive_message', obj)
     )
   );
 
-  socket.on('disconnect', (reason) =>
-    console.log(`User ${socket.id} disconnected. Reason: ${reason}`)
-  );
+  socket.on('disconnect', (reason) => {
+    console.log(`User ${socket.id} disconnected. Reason: ${reason}`);
+  });
 });
 
 server.listen(3001, () => console.log('SERVER RUNNING AT PORT 3000'));

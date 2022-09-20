@@ -1,8 +1,14 @@
 import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const Chat = ({ isLoggedIn, setIsLoggedIn, userName, socket }) => {
   const [messageToSend, setMessageToSend] = useState('');
   const [messageList, setMessageList] = useState([]);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    !isLoggedIn && navigate('/');
+  }, [isLoggedIn, navigate]);
 
   useEffect(() => {
     socket.on('receive_message', (message) => {
@@ -22,6 +28,12 @@ const Chat = ({ isLoggedIn, setIsLoggedIn, userName, socket }) => {
     };
     socket.emit('send_message', objToSend);
   };
+
+  const logOut = () => {
+    socket.disconnect();
+    setIsLoggedIn(false);
+  };
+
   return (
     <div>
       <input
@@ -31,6 +43,7 @@ const Chat = ({ isLoggedIn, setIsLoggedIn, userName, socket }) => {
         placeholder="Message..."
       />
       <button onClick={sendMessage}>Send</button>
+      <button onClick={logOut}>Log Out</button>
       {messageList.map((message, i) => (
         <div key={i}>
           <h3>{message.message}</h3>
