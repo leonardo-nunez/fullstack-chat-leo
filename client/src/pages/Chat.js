@@ -46,9 +46,10 @@ const Chat = ({ isLoggedIn, setIsLoggedIn, userName, socket }) => {
       <button onClick={logOut}>Log Out</button>
       {messageList.map((message, i) => (
         <div key={i}>
-          <h3>{message.message}</h3>
-          <p>{message.userName}</p>
-          <p>{message.time}</p>
+          <h3>{message?.message}</h3>
+          <p>{message?.userName}</p>
+          <p>{message?.time}</p>
+          <p>{message?.serverMessage}</p>
         </div>
       ))}
     </div>

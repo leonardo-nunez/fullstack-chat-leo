@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 const Login = ({
@@ -8,6 +8,7 @@ const Login = ({
   setUserName,
   socket,
 }) => {
+  const [errorMessage, seterrorMessage] = useState('');
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -17,8 +18,17 @@ const Login = ({
   const logIn = () => {
     !socket.connected && socket.connect();
     if (userName) {
-      setIsLoggedIn(true);
-      navigate('/chat');
+      socket.emit('login', userName);
+      socket.on('logged_in', (message) => {
+        if (!message.username) {
+          seterrorMessage(message.error);
+          return setTimeout(() => {
+            seterrorMessage('');
+          }, 3000);
+        }
+        setIsLoggedIn(true);
+        navigate('/chat');
+      });
     }
   };
 
@@ -30,6 +40,7 @@ const Login = ({
         placeholder="Username..."
       />
       <button onClick={logIn}>Log in</button>
+      <h5>{errorMessage}</h5>
     </div>
   );
 };
