@@ -34,39 +34,53 @@ const io = new Server(server, {
   },
 });
 
-io.eio.pingTimeout = 5000;
-io.eio.pingInterval = 3000;
-
 io.on('connection', (socket) => {
   console.log(`User connected: ${socket.id}`);
 
+  let inactivityTimer;
+
   socket.on('login', (userName) => {
-    const userDetails = addUser(socket.id, userName);
-    socket.emit('logged_in', userDetails);
-    if (userDetails.userName) {
-      socket.broadcast.emit('receive_message', {
-        serverMessage: userDetails.userName + ' joined the chat',
-      });
-      io.emit('users', { users });
-    }
-    console.log('users: ', users);
+    try {
+      const userDetails = addUser(socket.id, userName);
+      socket.emit('logged_in', userDetails);
+      if (userDetails.userName) {
+        socket.broadcast.emit('receive_message', {
+          alertMessage: userDetails.userName + ' joined the chat',
+        });
+        io.emit('users', { users });
+      }
+      console.log('users: ', users);
+    } catch (error) {}
   });
 
   socket.on(
     'send_message',
     (obj) => (
       console.log(`Sent message: ${obj.message}`),
+      clearTimeout(inactivityTimer),
+      // create error message helper function
+      (inactivityTimer = setTimeout(() => {
+        io.emit('alert_message', {
+          alertMessage: `${obj.userName} was disconnected due to inactivity`,
+        });
+        socket.emit('disconnected');
+        socket.disconnect();
+      }, 6000)),
       socket.broadcast.emit('receive_message', obj)
     )
   );
 
+  socket.on('log_out', () => {
+    const loggedOutUser = users.find((user) => user.id === socket.id);
+    io.emit('alert_message', {
+      alertMessage: loggedOutUser.userName + ' left the chat',
+    });
+    socket.disconnect();
+  });
+
   socket.on('disconnect', (reason) => {
     console.log(`User ${socket.id} disconnected. Reason: ${reason}`);
-    const removedUser = users.find((user) => user.id === socket.id);
-    removedUser &&
-      socket.broadcast.emit('receive_message', {
-        serverMessage: removedUser.userName + ' disconnected',
-      });
+
     removeUser(socket.id);
     io.emit('users', { users });
     console.log('users: ', users);

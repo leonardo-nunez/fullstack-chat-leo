@@ -17,8 +17,18 @@ const Chat = ({ isLoggedIn, setIsLoggedIn, userName, setUserName, socket }) => {
       // console.log('recieved message: ', message);
     });
 
+    socket.on('alert_message', (message) => {
+      setMessageList((list) => [...list, message]);
+    });
+
+    socket.on('disconnected', () => {
+      setIsLoggedIn(false);
+    });
+
     return () => {
       socket.off('receive_message');
+      socket.off('alert_message');
+      socket.off('disconnected');
     };
   }, [socket]);
 
@@ -38,7 +48,7 @@ const Chat = ({ isLoggedIn, setIsLoggedIn, userName, setUserName, socket }) => {
   };
 
   const logOut = () => {
-    socket.disconnect();
+    socket.emit('log_out');
     setUserName('');
     setIsLoggedIn(false);
   };
@@ -58,7 +68,7 @@ const Chat = ({ isLoggedIn, setIsLoggedIn, userName, setUserName, socket }) => {
           <h3>{message?.message}</h3>
           <p>{message?.userName}</p>
           <p>{message?.time}</p>
-          <p>{message?.serverMessage}</p>
+          <p>{message?.alertMessage}</p>
         </div>
       ))}
     </div>
