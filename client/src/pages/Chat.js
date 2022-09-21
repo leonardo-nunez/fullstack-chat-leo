@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-const Chat = ({ isLoggedIn, setIsLoggedIn, userName, socket }) => {
+const Chat = ({ isLoggedIn, setIsLoggedIn, userName, setUserName, socket }) => {
   const [messageToSend, setMessageToSend] = useState('');
   const [messageList, setMessageList] = useState([]);
   const navigate = useNavigate();
@@ -14,6 +14,7 @@ const Chat = ({ isLoggedIn, setIsLoggedIn, userName, socket }) => {
     socket.on('receive_message', (message) => {
       setMessageList((list) => [...list, message]);
       console.log('messageList set');
+      // console.log('recieved message: ', message);
     });
 
     return () => {
@@ -23,7 +24,7 @@ const Chat = ({ isLoggedIn, setIsLoggedIn, userName, socket }) => {
 
   const sendMessage = () => {
     const objToSend = {
-      id: new Date(Date.now()),
+      id: Date.now(),
       userName,
       message: messageToSend,
       time:
@@ -33,10 +34,12 @@ const Chat = ({ isLoggedIn, setIsLoggedIn, userName, socket }) => {
     };
     setMessageList((list) => [...list, objToSend]);
     socket.emit('send_message', objToSend);
+    // console.log('objToSend: ', objToSend);
   };
 
   const logOut = () => {
     socket.disconnect();
+    setUserName('');
     setIsLoggedIn(false);
   };
 

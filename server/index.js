@@ -10,6 +10,8 @@ const server = createServer(app);
 
 const users = [];
 
+// const timeoutTime = 300000;
+
 const addUser = (id, userName) => {
   const multipleUser = users.find((user) => user.userName === userName);
   if (multipleUser) {
@@ -32,6 +34,9 @@ const io = new Server(server, {
   },
 });
 
+io.eio.pingTimeout = 5000;
+io.eio.pingInterval = 3000;
+
 io.on('connection', (socket) => {
   console.log(`User connected: ${socket.id}`);
 
@@ -42,6 +47,7 @@ io.on('connection', (socket) => {
       socket.broadcast.emit('receive_message', {
         serverMessage: userDetails.userName + ' joined the chat',
       });
+      io.emit('users', { users });
     }
     console.log('users: ', users);
   });
@@ -62,6 +68,7 @@ io.on('connection', (socket) => {
         serverMessage: removedUser.userName + ' disconnected',
       });
     removeUser(socket.id);
+    io.emit('users', { users });
     console.log('users: ', users);
   });
 });

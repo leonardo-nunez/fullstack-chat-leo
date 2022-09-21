@@ -8,28 +8,33 @@ const Login = ({
   setUserName,
   socket,
 }) => {
-  const [errorMessage, seterrorMessage] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
   const navigate = useNavigate();
 
   useEffect(() => {
     isLoggedIn && navigate('/chat');
   }, [isLoggedIn, navigate]);
 
+  const displayErrorMessage = (err) => {
+    setErrorMessage(err);
+    return setTimeout(() => {
+      setErrorMessage('');
+    }, 3000);
+  };
+
   const logIn = () => {
     !socket.connected && socket.connect();
-    if (userName) {
-      socket.emit('login', userName);
-      socket.on('logged_in', (message) => {
-        if (!message.userName) {
-          seterrorMessage(message.error);
-          return setTimeout(() => {
-            seterrorMessage('');
-          }, 3000);
-        }
-        setIsLoggedIn(true);
-        navigate('/chat');
-      });
+    if (!userName) {
+      return displayErrorMessage('Choose a username...');
     }
+    socket.emit('login', userName);
+    socket.on('logged_in', (message) => {
+      if (!message.userName) {
+        return displayErrorMessage(message.error);
+      }
+      setIsLoggedIn(true);
+      navigate('/chat');
+    });
   };
 
   return (

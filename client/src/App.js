@@ -5,6 +5,7 @@ import io from 'socket.io-client';
 
 import Login from './pages/Login';
 import Chat from './pages/Chat';
+import UserDisplay from './components/UserDisplay';
 
 export const socket = io.connect('http://localhost:3001');
 
@@ -14,6 +15,7 @@ function App() {
 
   return (
     <div className="App">
+      <UserDisplay socket={socket} />
       <Routes>
         <Route
           path="/"
@@ -35,6 +37,7 @@ function App() {
               setIsLoggedIn={setIsLoggedIn}
               socket={socket}
               userName={userName}
+              setUserName={setUserName}
             />
           }
         />
