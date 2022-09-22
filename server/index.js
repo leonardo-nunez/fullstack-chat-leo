@@ -8,9 +8,8 @@ app.use(cors);
 
 const server = createServer(app);
 
+const chatConfig = require('./chat-config');
 const users = [];
-
-// const timeoutTime = 300000;
 
 const addUser = (id, userName) => {
   const multipleUser = users.find((user) => user.userName === userName);
@@ -40,17 +39,12 @@ io.on('connection', (socket) => {
   let inactivityTimer;
 
   socket.on('login', (userName) => {
-    try {
-      const userDetails = addUser(socket.id, userName);
-      socket.emit('logged_in', userDetails);
-      if (userDetails.userName) {
-        socket.broadcast.emit('receive_message', {
-          alertMessage: userDetails.userName + ' joined the chat',
-        });
-        io.emit('users', { users });
-      }
-      console.log('users: ', users);
-    } catch (error) {}
+    // try {
+    const userDetails = addUser(socket.id, userName);
+    socket.emit('logged_in', userDetails);
+    io.emit('users', { users });
+    // console.log('users: ', users);
+    // } catch (error) {}
   });
 
   socket.on(
@@ -65,7 +59,7 @@ io.on('connection', (socket) => {
         });
         socket.emit('disconnected');
         socket.disconnect();
-      }, 6000)),
+      }, chatConfig.inactivityTimer)),
       socket.broadcast.emit('receive_message', obj)
     )
   );
@@ -73,7 +67,7 @@ io.on('connection', (socket) => {
   socket.on('log_out', () => {
     const loggedOutUser = users.find((user) => user.id === socket.id);
     io.emit('alert_message', {
-      alertMessage: loggedOutUser.userName + ' left the chat',
+      alertMessage: loggedOutUser.userName + ' left the chat, connection lost',
     });
     socket.disconnect();
   });

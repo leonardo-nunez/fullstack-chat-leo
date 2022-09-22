@@ -11,6 +11,20 @@ const Chat = ({ isLoggedIn, setIsLoggedIn, userName, setUserName, socket }) => {
   }, [isLoggedIn, navigate]);
 
   useEffect(() => {
+    const joinMesage = {
+      id: Date.now(),
+      userName,
+      alertMessage: userName + ' joined the chat',
+    };
+    socket.emit('send_message', joinMesage);
+    console.log('emitting join-message', joinMesage.id);
+
+    return () => {
+      socket.off('send_message');
+    };
+  }, []);
+
+  useEffect(() => {
     socket.on('receive_message', (message) => {
       setMessageList((list) => [...list, message]);
       console.log('messageList set');
@@ -47,10 +61,10 @@ const Chat = ({ isLoggedIn, setIsLoggedIn, userName, setUserName, socket }) => {
     // console.log('objToSend: ', objToSend);
   };
 
-  const logOut = () => {
-    socket.emit('log_out');
+  const logOut = async () => {
     setUserName('');
     setIsLoggedIn(false);
+    socket.emit('log_out');
   };
 
   return (
