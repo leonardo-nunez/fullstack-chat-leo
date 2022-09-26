@@ -22,30 +22,34 @@ const Login = ({
     }, 3000);
   };
 
-  const logIn = () => {
+  const logIn = (e) => {
+    e.preventDefault();
     !socket.connected && socket.connect();
-    if (!userName) {
-      return displayErrorMessage('Choose a username...');
-    }
+    if (!userName) return displayErrorMessage('Choose a username...');
     socket.emit('login', userName);
     socket.on('logged_in', (message) => {
-      if (!message.userName) {
-        return displayErrorMessage(message.error);
-      }
+      if (!message.userName) return displayErrorMessage(message.error);
       setIsLoggedIn(true);
       navigate('/chat');
     });
   };
 
   return (
-    <div>
-      <input
-        onChange={(e) => setUserName(e.target.value)}
-        type="text"
-        placeholder="Username..."
-      />
-      <button onClick={logIn}>Log in</button>
-      <h5>{errorMessage}</h5>
+    <div className="login">
+      <h1>Leo chat</h1>
+      <form className="login__form" action="submit">
+        <input
+          autoFocus
+          className="login__input"
+          onChange={(e) => setUserName(e.target.value)}
+          type="text"
+          placeholder="Username..."
+        />
+        <button type="submit" className="login__button" onClick={logIn}>
+          ▶
+        </button>
+      </form>
+      <h5 className="login__error-message">{errorMessage}</h5>
     </div>
   );
 };

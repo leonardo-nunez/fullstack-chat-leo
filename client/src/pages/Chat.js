@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 const Chat = ({ isLoggedIn, setIsLoggedIn, userName, setUserName, socket }) => {
@@ -6,18 +6,20 @@ const Chat = ({ isLoggedIn, setIsLoggedIn, userName, setUserName, socket }) => {
   const [messageList, setMessageList] = useState([]);
   const navigate = useNavigate();
 
+  const bottomRef = useRef(null);
+
   useEffect(() => {
     !isLoggedIn && navigate('/');
   }, [isLoggedIn, navigate]);
 
   useEffect(() => {
-    const joinMesage = {
+    const joinMessage = {
       id: Date.now(),
       userName,
+      message: 'Login message',
       alertMessage: userName + ' joined the chat',
     };
-    socket.emit('send_message', joinMesage);
-    console.log('emitting join-message', joinMesage.id);
+    socket.emit('send_message', joinMessage);
 
     return () => {
       socket.off('send_message');
@@ -25,10 +27,13 @@ const Chat = ({ isLoggedIn, setIsLoggedIn, userName, setUserName, socket }) => {
   }, []);
 
   useEffect(() => {
+    bottomRef.current?.scrollIntoView({ behavior: 'smooth' });
+  }, [messageList]);
+
+  useEffect(() => {
     socket.on('receive_message', (message) => {
       setMessageList((list) => [...list, message]);
       console.log('messageList set');
-      // console.log('recieved message: ', message);
     });
 
     socket.on('alert_message', (message) => {
@@ -46,19 +51,20 @@ const Chat = ({ isLoggedIn, setIsLoggedIn, userName, setUserName, socket }) => {
     };
   }, [socket]);
 
-  const sendMessage = () => {
+  const sendMessage = (e) => {
+    e.preventDefault();
     const objToSend = {
       id: Date.now(),
       userName,
       message: messageToSend,
       time:
-        new Date(Date.now()).getHours() +
+        String(new Date(Date.now()).getHours()).padStart(2, '0') +
         ':' +
-        new Date(Date.now()).getMinutes(),
+        String(new Date(Date.now()).getMinutes()).padStart(2, '0'),
     };
     setMessageList((list) => [...list, objToSend]);
     socket.emit('send_message', objToSend);
-    // console.log('objToSend: ', objToSend);
+    setMessageToSend('');
   };
 
   const logOut = async () => {
@@ -68,23 +74,79 @@ const Chat = ({ isLoggedIn, setIsLoggedIn, userName, setUserName, socket }) => {
   };
 
   return (
-    <div>
-      <input
-        value={messageToSend}
-        onChange={(e) => setMessageToSend(e.target.value)}
-        type="text"
-        placeholder="Message..."
-      />
-      <button onClick={sendMessage}>Send</button>
-      <button onClick={logOut}>Log Out</button>
-      {messageList.map((message, i) => (
-        <div key={i}>
-          <h3>{message?.message}</h3>
-          <p>{message?.userName}</p>
-          <p>{message?.time}</p>
-          <p>{message?.alertMessage}</p>
-        </div>
-      ))}
+    <div className="chat">
+      <div className="chat__window">
+        {messageList.map((message, i) => (
+          <div
+            key={i}
+            className={
+              message.userName === userName
+                ? 'my-message-box'
+                : 'others-message-box'
+            }
+          >
+            {message.alertMessage ? (
+              <div className="chat__message chat__alert-message">
+                <p>{message?.alertMessage}</p>
+              </div>
+            ) : (
+              <div className="message__wrapper">
+                <h4
+                  className={
+                    message.userName === userName
+                      ? 'chat__message my-message'
+                      : 'chat__message others-message'
+                  }
+                >
+                  {message?.message}
+                </h4>
+                <div
+                  className={
+                    message.userName === userName
+                      ? 'message__footer my-footer'
+                      : 'message__footer others-footer'
+                  }
+                >
+                  <p
+                    className="message__username"
+                    style={
+                      message.userName === userName
+                        ? { display: 'none' }
+                        : { display: 'inline' }
+                    }
+                  >
+                    {message?.userName} -&nbsp;
+                  </p>
+                  <p className="message__time">{message?.time}</p>
+                </div>
+              </div>
+            )}
+          </div>
+        ))}
+        <div ref={bottomRef} />
+      </div>
+      <div className="chat__controlls">
+        <form className="chat__form" action="submit">
+          <input
+            autoFocus
+            className="chat__input"
+            value={messageToSend}
+            onChange={(e) => setMessageToSend(e.target.value)}
+            type="text"
+            placeholder="Message..."
+          />
+          <button
+            type="submit"
+            className="chat__button chat__button--send"
+            onClick={sendMessage}
+          >
+            ▶
+          </button>
+        </form>
+        <button className="chat__button chat__button--log-out" onClick={logOut}>
+          ✖
+        </button>
+      </div>
     </div>
   );
 };

@@ -1,5 +1,21 @@
+/* CSS HEX */
+:root {
+  --middle-blue-green: #84e3c8ff;
+  --magic-mint: #a8e6cfff;
+  --tea-green: #dcedc1ff;
+  --apricot: #ffd3b6ff;
+  --melon: #ffaaa5ff;
+  --salmon-pink: #ff8b94ff;
+  --ultra-red: #ff7480ff;
+}
+
 .App {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
   text-align: center;
+  height: 100vh;
+  width: 100vw;
 }
 
 .userList {
@@ -9,4 +25,181 @@
   margin: 5px;
   padding: 5px;
   right: 0;
+  top: 0;
+}
+
+.chat,
+.login {
+  display: flex;
+  flex-direction: column;
+  margin: auto;
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+  max-width: 30rem;
+  width: 90vw;
+  height: 95vh;
+  background: linear-gradient(0deg, var(--apricot) 0%, var(--melon) 100%);
+  border-radius: 5px;
+}
+
+.login {
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.login__error-message {
+  height: 1rem;
+  margin: 0;
+}
+
+.chat__controlls {
+  display: flex;
+  justify-content: center;
+  flex-grow: 2;
+  align-items: center;
+}
+
+.chat__form {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 85%;
+}
+
+.chat__input,
+.login__input {
+  border: none;
+  border-radius: 5px;
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+  width: 70%;
+  padding: 0 0.5rem;
+  height: 2.5rem;
+  outline-color: lightgrey;
+}
+
+.login__form {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.login__input {
+  width: auto;
+}
+
+.chat__button,
+.login__button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0.5rem;
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+  border: none;
+  border-radius: 50%;
+  width: 2.5rem;
+  height: 2.5rem;
+  background-color: var(--middle-blue-green);
+  padding: 0;
+  outline-color: lightgrey;
+}
+
+.chat__button:hover,
+.login__button:hover {
+  background-color: var(--magic-mint);
+  cursor: pointer;
+}
+
+.chat__button--log-out {
+  background-color: var(--ultra-red);
+  border-radius: 5px;
+}
+.chat__button--log-out:hover {
+  background-color: var(--melon);
+}
+
+.chat__window {
+  display: flex;
+  flex-direction: column;
+  height: 90%;
+  /* justify-content: flex-end; */
+  padding: 0.5rem;
+  overflow-y: auto;
+}
+
+.chat__window > :first-child {
+  margin-top: auto;
+}
+
+::-webkit-scrollbar {
+  width: 9px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background-color: rgba(155, 155, 155, 0.5);
+  border-radius: 20px;
+  border: transparent;
+}
+
+.message__wrapper {
+  width: fit-content;
+  max-width: 80%;
+  margin-top: 0.5rem;
+}
+
+.chat__message {
+  margin: 0;
+  padding: 0.5rem;
+  border-radius: 5px;
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+}
+
+.chat__alert-message {
+  background-color: rgb(240, 240, 240);
+  border: none;
+  font-size: 0.7rem;
+  box-shadow: none;
+  padding: 0;
+}
+
+.message__footer {
+  display: flex;
+  justify-content: flex-end;
+  font-size: x-small;
+  margin: 0 0.5rem;
+  color: gray;
+}
+
+.others-footer {
+  justify-content: flex-start;
+}
+
+.message__username,
+p {
+  padding: 0;
+  margin: 2px 0;
+}
+
+.message__time {
+  padding: 0;
+}
+
+.my-message-box {
+  display: flex;
+  flex-direction: row-reverse;
+}
+
+.message__text {
+  margin: 0.5rem;
+}
+
+.my-message {
+  background-color: var(--magic-mint);
+  text-align: right;
+}
+
+.others-message {
+  background-color: var(--tea-green);
+  text-align: left;
 }

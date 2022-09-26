@@ -9,22 +9,7 @@ app.use(cors);
 const server = createServer(app);
 
 const chatConfig = require('./chat-config');
-const users = [];
-
-const addUser = (id, userName) => {
-  const multipleUser = users.find((user) => user.userName === userName);
-  if (multipleUser) {
-    return { error: 'Username is taken. Choose a new one' };
-  }
-  const user = { id, userName };
-  users.push(user);
-  return user;
-};
-
-const removeUser = (id) => {
-  const removedUser = users.find((user) => user.id === id);
-  users.splice(users.indexOf(removedUser), 1);
-};
+const { users, addUser, removeUser } = require('./users');
 
 const io = new Server(server, {
   cors: {
@@ -43,7 +28,7 @@ io.on('connection', (socket) => {
     const userDetails = addUser(socket.id, userName);
     socket.emit('logged_in', userDetails);
     io.emit('users', { users });
-    // console.log('users: ', users);
+    console.log('users: ', users);
     // } catch (error) {}
   });
 
