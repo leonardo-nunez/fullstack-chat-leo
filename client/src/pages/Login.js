@@ -32,6 +32,15 @@ const Login = ({
       setIsLoggedIn(true);
       navigate('/chat');
     });
+    //FIX THIS!
+    // socket.on('connect_error', () => {
+    //   displayErrorMessage('Server unavailable');
+    //   socket.off('connect_error');
+    // });
+    !socket.connected &&
+      setTimeout(() => {
+        displayErrorMessage('Server unavailable');
+      }, 100);
   };
 
   return (

@@ -44,10 +44,15 @@ const Chat = ({ isLoggedIn, setIsLoggedIn, userName, setUserName, socket }) => {
       setIsLoggedIn(false);
     });
 
+    socket.on('connect_error', () => {
+      setIsLoggedIn(false);
+    });
+
     return () => {
       socket.off('receive_message');
       socket.off('alert_message');
       socket.off('disconnected');
+      socket.off('connect_error');
     };
   }, [socket]);
 
@@ -62,9 +67,11 @@ const Chat = ({ isLoggedIn, setIsLoggedIn, userName, setUserName, socket }) => {
         ':' +
         String(new Date(Date.now()).getMinutes()).padStart(2, '0'),
     };
-    setMessageList((list) => [...list, objToSend]);
-    socket.emit('send_message', objToSend);
-    setMessageToSend('');
+    if (messageToSend) {
+      setMessageList((list) => [...list, objToSend]);
+      socket.emit('send_message', objToSend);
+      setMessageToSend('');
+    }
   };
 
   const logOut = async () => {
