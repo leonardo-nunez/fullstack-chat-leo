@@ -1,5 +1,5 @@
-const inactivityTimerMinutes = 10;
-const inactivityTimerSeconds = 0;
+const inactivityTimerMinutes = 0;
+const inactivityTimerSeconds = 10;
 
 const chatConfig = {
   inactivityTimer:

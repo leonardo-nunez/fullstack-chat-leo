@@ -12,6 +12,7 @@ export const socket = io.connect('http://localhost:3001');
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [userName, setUserName] = useState('');
+  const [inactive, setInactive] = useState(false);
 
   return (
     <div className="App">
@@ -21,6 +22,8 @@ function App() {
           path="/"
           element={
             <Login
+              inactive={inactive}
+              setInactive={setInactive}
               isLoggedIn={isLoggedIn}
               setIsLoggedIn={setIsLoggedIn}
               userName={userName}
@@ -38,6 +41,7 @@ function App() {
               socket={socket}
               userName={userName}
               setUserName={setUserName}
+              setInactive={setInactive}
             />
           }
         />

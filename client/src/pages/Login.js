@@ -2,6 +2,8 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 const Login = ({
+  inactive,
+  setInactive,
   isLoggedIn,
   setIsLoggedIn,
   userName,
@@ -14,6 +16,12 @@ const Login = ({
   useEffect(() => {
     isLoggedIn && navigate('/chat');
   }, [isLoggedIn, navigate]);
+
+  useEffect(() => {
+    inactive &&
+      setErrorMessage('Disconnected by the server due to inactivity.');
+    setInactive(false);
+  }, [inactive, setInactive]);
 
   const displayErrorMessage = (err) => {
     setErrorMessage(err);
@@ -30,6 +38,7 @@ const Login = ({
     socket.on('logged_in', (message) => {
       if (!message.userName) return displayErrorMessage(message.error);
       setIsLoggedIn(true);
+      setErrorMessage('');
       navigate('/chat');
     });
     //FIX THIS!

@@ -42,7 +42,7 @@ io.on('connection', (socket) => {
         io.emit('alert_message', {
           alertMessage: `${obj.userName} was disconnected due to inactivity`,
         });
-        socket.emit('disconnected');
+        socket.emit('inactive');
         socket.disconnect();
       }, chatConfig.inactivityTimer)),
       socket.broadcast.emit('receive_message', obj)
@@ -52,7 +52,7 @@ io.on('connection', (socket) => {
   socket.on('log_out', () => {
     const loggedOutUser = users.find((user) => user.id === socket.id);
     io.emit('alert_message', {
-      alertMessage: loggedOutUser.userName + ' left the chat, connection lost',
+      alertMessage: loggedOutUser?.userName + ' left the chat, connection lost',
     });
     socket.disconnect();
   });
