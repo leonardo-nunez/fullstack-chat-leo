@@ -18,6 +18,10 @@ const io = new Server(server, {
   },
 });
 
+const sigintHandler = () => {
+  console.log('SIGINTHANDLER!!!');
+};
+
 io.on('connection', (socket) => {
   console.log(`User connected: ${socket.id}`);
 
@@ -49,21 +53,35 @@ io.on('connection', (socket) => {
     )
   );
 
+  socket.on('reload_userList', () => {
+    console.log('Received reload_userList', { users });
+    io.emit('users', { users });
+  });
+
   socket.on('log_out', () => {
     const loggedOutUser = users.find((user) => user.id === socket.id);
     io.emit('alert_message', {
       alertMessage: loggedOutUser?.userName + ' left the chat, connection lost',
     });
     socket.disconnect();
+    io.emit('users', { users });
   });
 
   socket.on('disconnect', (reason) => {
     console.log(`User ${socket.id} disconnected. Reason: ${reason}`);
-
     removeUser(socket.id);
     io.emit('users', { users });
     console.log('users: ', users);
   });
 });
 
+const handleSIG = () => {
+  console.log('SIGINT/SIGTERM signal received. Terminating...');
+  // io.socket.server.close();
+  io.emit('disconnect');
+};
+
 server.listen(3001, () => console.log('SERVER RUNNING AT PORT 3000'));
+
+process.on('SIGINT', handleSIG);
+process.on('SIGTERM', handleSIG);

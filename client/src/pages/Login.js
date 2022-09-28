@@ -14,6 +14,18 @@ const Login = ({
   const navigate = useNavigate();
 
   useEffect(() => {
+    !socket.connected && socket.connect();
+    setTimeout(() => {
+      socket.emit('reload_userList');
+      console.log('emitted reload_userList');
+    }, 100);
+
+    return () => {
+      socket.off('reload_userList');
+    };
+  }, []);
+
+  useEffect(() => {
     isLoggedIn && navigate('/chat');
   }, [isLoggedIn, navigate]);
 
@@ -32,7 +44,6 @@ const Login = ({
 
   const logIn = (e) => {
     e.preventDefault();
-    !socket.connected && socket.connect();
     if (!userName) return displayErrorMessage('Choose a username...');
     socket.emit('login', userName);
     socket.on('logged_in', (message) => {

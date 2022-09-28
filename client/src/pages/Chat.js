@@ -27,11 +27,12 @@ const Chat = ({
       alertMessage: userName + ' joined the chat',
     };
     socket.emit('send_message', joinMessage);
+    setMessageList([{ alertMessage: `Welcome to the chat ${userName}!` }]);
 
     return () => {
       socket.off('send_message');
     };
-  }, []);
+  }, [socket, userName]);
 
   useEffect(() => {
     bottomRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -62,7 +63,7 @@ const Chat = ({
       socket.off('disconnected');
       socket.off('connect_error');
     };
-  }, [socket]);
+  }, [socket, setInactive, setIsLoggedIn]);
 
   const sendMessage = (e) => {
     e.preventDefault();
@@ -86,6 +87,7 @@ const Chat = ({
     setUserName('');
     setIsLoggedIn(false);
     socket.emit('log_out');
+    // socket.emit('reload_userList');
   };
 
   return (

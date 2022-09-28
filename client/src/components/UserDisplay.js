@@ -14,12 +14,30 @@ const UserDisplay = ({ socket }) => {
     };
   }, [socket]);
 
+  // useEffect(() => {
+  //   socket.emit('reload_userList');
+
+  //   return () => {
+  //     socket.off('reload_userList');
+  //   };
+  // }, []);
+
   return (
-    <div className="userList">
-      <h5>Userlist:</h5>
-      {userList.map((user, i) => (
-        <p key={i}>{user.userName}</p>
-      ))}
+    <div
+      className="user-list"
+      style={
+        !userList.length ? { visibility: 'hidden' } : { visibility: 'visible' }
+      }
+    >
+      <h5 className="user-list__heading">Userlist:</h5>
+      <div className="user-list__list">
+        {userList.map((user, i) => (
+          <p className="user-list__name" key={i}>
+            {i !== 0 && ', '}
+            {user.userName}
+          </p>
+        ))}
+      </div>
     </div>
   );
 };

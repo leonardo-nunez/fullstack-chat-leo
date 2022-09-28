@@ -12,27 +12,8 @@
 .App {
   display: flex;
   flex-direction: column;
-  justify-content: center;
   text-align: center;
-  height: 100vh;
-  width: 100vw;
-}
-
-.userList {
-  position: absolute;
-  border: 1px solid black;
-  width: fit-content;
-  margin: 5px;
-  padding: 5px;
-  right: 0;
-  top: 0;
-}
-
-.chat,
-.login {
-  display: flex;
-  flex-direction: column;
-  margin: auto;
+  margin: 2.5vh auto;
   box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
   max-width: 30rem;
   width: 90vw;
@@ -41,10 +22,30 @@
   border-radius: 5px;
 }
 
+.user-list {
+  margin: 0.3rem;
+  padding: 0.5rem;
+  border-radius: 5px;
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+  min-height: 2.5rem;
+  /* background-color: var(--apricot); */
+}
+
+.user-list__heading {
+  margin: 0;
+}
+.user-list__list {
+}
+.user-list__name {
+  display: inline;
+}
+
+.chat,
 .login {
+  display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: center;
+  height: 100%;
 }
 
 .login__error-message {
