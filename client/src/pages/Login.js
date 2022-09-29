@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import Settings from '../components/Settings';
 
 const Login = ({
   inactive,
@@ -16,12 +17,11 @@ const Login = ({
   useEffect(() => {
     !socket.connected && socket.connect();
     setTimeout(() => {
-      socket.emit('reload_userList');
-      console.log('emitted reload_userList');
-    }, 100);
+      socket.emit('login_page_load');
+    }, 200);
 
     return () => {
-      socket.off('reload_userList');
+      socket.off('login_page_load');
     };
   }, []);
 
@@ -64,22 +64,25 @@ const Login = ({
   };
 
   return (
-    <div className="login">
-      <h1>Leo chat</h1>
-      <form className="login__form" action="submit">
-        <input
-          autoFocus
-          className="login__input"
-          onChange={(e) => setUserName(e.target.value)}
-          type="text"
-          placeholder="Username..."
-        />
-        <button type="submit" className="login__button" onClick={logIn}>
-          ▶
-        </button>
-      </form>
-      <h5 className="login__error-message">{errorMessage}</h5>
-    </div>
+    <>
+      <div className="login">
+        <h1>💬</h1>
+        <form className="login__form" action="submit">
+          <input
+            autoFocus
+            className="login__input"
+            onChange={(e) => setUserName(e.target.value)}
+            type="text"
+            placeholder="Username..."
+          />
+          <button type="submit" className="login__button" onClick={logIn}>
+            ▶
+          </button>
+        </form>
+        <h5 className="login__error-message">{errorMessage}</h5>
+      </div>
+      <Settings socket={socket} />
+    </>
   );
 };
 

@@ -8,7 +8,7 @@ app.use(cors);
 
 const server = createServer(app);
 
-const chatConfig = require('./chat-config');
+const { inactivityTime, inactivityMS } = require('./chat-config');
 const { users, addUser, removeUser } = require('./users');
 
 const io = new Server(server, {
@@ -18,14 +18,20 @@ const io = new Server(server, {
   },
 });
 
-const sigintHandler = () => {
-  console.log('SIGINTHANDLER!!!');
-};
-
 io.on('connection', (socket) => {
   console.log(`User connected: ${socket.id}`);
 
   let inactivityTimer;
+
+  socket.on('login_page_load', () => {
+    io.emit('users', { users });
+    io.emit('starting_settings', inactivityTime);
+  });
+
+  socket.on('update_settings', (inactiveTime) => {
+    inactivityTime.minutes = inactiveTime.minutes;
+    inactivityTime.seconds = inactiveTime.seconds;
+  });
 
   socket.on('login', (userName) => {
     // try {
@@ -48,15 +54,10 @@ io.on('connection', (socket) => {
         });
         socket.emit('inactive');
         socket.disconnect();
-      }, chatConfig.inactivityTimer)),
+      }, inactivityMS())),
       socket.broadcast.emit('receive_message', obj)
     )
   );
-
-  socket.on('reload_userList', () => {
-    console.log('Received reload_userList', { users });
-    io.emit('users', { users });
-  });
 
   socket.on('log_out', () => {
     const loggedOutUser = users.find((user) => user.id === socket.id);

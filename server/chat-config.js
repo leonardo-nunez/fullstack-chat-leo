@@ -1,9 +1,10 @@
-const inactivityTimerMinutes = 10;
-const inactivityTimerSeconds = 0;
+const inactivityTime = { minutes: 5, seconds: 11 };
 
-const chatConfig = {
-  inactivityTimer:
-    inactivityTimerMinutes * 60000 + inactivityTimerSeconds * 1000,
+const inactivityMS = () => {
+  return inactivityTime.minutes * 60000 + inactivityTime.seconds * 1000;
 };
 
-module.exports = chatConfig;
+module.exports = {
+  inactivityTime,
+  inactivityMS,
+};

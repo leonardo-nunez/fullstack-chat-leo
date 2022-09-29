@@ -48,9 +48,48 @@
   height: 100%;
 }
 
+.chat {
+  max-height: 93%;
+}
+
 .login__error-message {
   height: 1rem;
   margin: 0;
+}
+
+.settings {
+  display: flex;
+  justify-content: flex-end;
+  font-size: small;
+  height: 2rem;
+}
+
+.settings__window {
+  display: flex;
+  align-items: center;
+}
+
+.settings__number-input {
+  width: 1.7rem;
+  font-size: x-small;
+  border: none;
+  border-radius: 5px;
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+}
+
+.settings__btn-wrapper {
+  height: 2.2rem;
+  width: 2.2rem;
+}
+
+.settings__btn {
+  all: unset;
+  margin: 0.5rem;
+  font-size: 0.8rem;
+}
+
+.settings__btn:hover {
+  font-size: 0.9rem;
 }
 
 .chat__controlls {
@@ -89,7 +128,8 @@
 }
 
 .chat__button,
-.login__button {
+.login__button,
+.settings__update-btn {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -104,10 +144,27 @@
   outline-color: lightgrey;
 }
 
+.settings__update-btn {
+  width: fit-content;
+  height: fit-content;
+  padding: 0.2rem;
+  margin: 0 0.5rem;
+  border-radius: 5px;
+  background-color: var(--tea-green);
+  font-size: x-small;
+}
+
 .chat__button:hover,
-.login__button:hover {
+.login__button:hover,
+.settings__update-btn:hover {
   background-color: var(--magic-mint);
   cursor: pointer;
+}
+.chat__button:active,
+.login__button:active,
+.settings__update-btn:active,
+.chat__button--log-out:active {
+  background-color: var(--melon);
 }
 
 .chat__button--log-out {
@@ -115,14 +172,13 @@
   border-radius: 5px;
 }
 .chat__button--log-out:hover {
-  background-color: var(--melon);
+  background-color: var(--salmon-pink);
 }
 
 .chat__window {
   display: flex;
   flex-direction: column;
   height: 90%;
-  /* justify-content: flex-end; */
   padding: 0.5rem;
   overflow-y: auto;
 }
