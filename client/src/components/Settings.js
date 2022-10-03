@@ -8,23 +8,17 @@ const Settings = ({ socket }) => {
     socket.on('starting_settings', (recievedTime) => {
       setInactiveTime(recievedTime);
     });
+    socket.on('update_settings', (recievedTime) => {
+      setInactiveTime(recievedTime);
+    });
     return () => {
       socket.off('starting_settings');
+      socket.on('update_settings');
     };
-  }, []);
-
-  // useEffect(() => {
-  //   socket.emit('update_settings', inactiveTime);
-
-  //   return () => {
-  //     socket.off('update_settings');
-  //   };
-  // }, [inactiveTime]);
-
-  const validateSettings = () => {};
+  }, [socket]);
 
   const updateTimer = () => {
-    socket.emit('update_settings', inactiveTime);
+    socket.emit('send_updated_settings', inactiveTime);
     setSettingsOpen(false);
   };
 

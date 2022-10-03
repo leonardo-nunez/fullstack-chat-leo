@@ -1,5 +1,6 @@
 const express = require('express');
 const app = express();
+const port = 3001;
 const { createServer } = require('http');
 
 const { Server } = require('socket.io');
@@ -28,9 +29,10 @@ io.on('connection', (socket) => {
     io.emit('starting_settings', inactivityTime);
   });
 
-  socket.on('update_settings', (inactiveTime) => {
+  socket.on('send_updated_settings', (inactiveTime) => {
     inactivityTime.minutes = inactiveTime.minutes;
     inactivityTime.seconds = inactiveTime.seconds;
+    io.emit('update_settings', inactiveTime);
   });
 
   socket.on('login', (userName) => {
@@ -62,7 +64,7 @@ io.on('connection', (socket) => {
   socket.on('log_out', () => {
     const loggedOutUser = users.find((user) => user.id === socket.id);
     io.emit('alert_message', {
-      alertMessage: loggedOutUser?.userName + ' left the chat, connection lost',
+      alertMessage: loggedOutUser?.userName + ' left the chat',
     });
     socket.disconnect();
     io.emit('users', { users });
@@ -78,11 +80,14 @@ io.on('connection', (socket) => {
 
 const handleSIG = () => {
   console.log('SIGINT/SIGTERM signal received. Terminating...');
-  // io.socket.server.close();
-  io.emit('disconnect');
+  // io.emit('server_disconnected', {
+  //   errorMessage: 'Server disconnected',
+  // });
+  io.socket.server.close();
+  // io.emit('disconnect');
 };
 
-server.listen(3001, () => console.log('SERVER RUNNING AT PORT 3000'));
+server.listen(port, () => console.log(`SERVER RUNNING AT PORT ${port}`));
 
 process.on('SIGINT', handleSIG);
 process.on('SIGTERM', handleSIG);

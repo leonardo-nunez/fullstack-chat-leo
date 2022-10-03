@@ -1,0 +1,25 @@
+{
+  "name": "fullstack-chat-leo",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "server": "npm start --prefix server",
+    "client": "npm start --prefix client",
+    "dev": "concurrently \"npm run server\" \"npm run client\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/leonardo-nunez/fullstack-chat-leo.git"
+  },
+  "author": "Leonardo Nunez",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/leonardo-nunez/fullstack-chat-leo/issues"
+  },
+  "homepage": "https://github.com/leonardo-nunez/fullstack-chat-leo#readme",
+  "dependencies": {
+    "concurrently": "^7.4.0"
+  }
+}

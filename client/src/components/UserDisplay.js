@@ -6,21 +6,13 @@ const UserDisplay = ({ socket }) => {
   useEffect(() => {
     socket.on('users', (userList) => {
       setUserList(userList.users);
-      console.log('userList set...');
+      // console.log('userList set...');
     });
 
     return () => {
       socket.off('users');
     };
   }, [socket]);
-
-  // useEffect(() => {
-  //   socket.emit('reload_userList');
-
-  //   return () => {
-  //     socket.off('reload_userList');
-  //   };
-  // }, []);
 
   return (
     <div
