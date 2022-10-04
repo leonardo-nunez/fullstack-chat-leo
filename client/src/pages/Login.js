@@ -1,4 +1,3 @@
-import React from 'react';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Settings from '../components/Settings';
@@ -24,7 +23,7 @@ const Login = ({
     return () => {
       socket.off('login_page_load');
     };
-  }, []);
+  }, [socket]);
 
   useEffect(() => {
     isLoggedIn && navigate('/chat');
