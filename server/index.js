@@ -19,6 +19,10 @@ const io = new Server(server, {
   },
 });
 
+app.get('/', (req, res) => {
+  res.write(`<h1>Socket IO Start on port : ${port}</h1>`);
+});
+
 io.on('connection', (socket) => {
   console.log(`User connected: ${socket.id}`);
 
