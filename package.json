@@ -8,7 +8,7 @@
     "server": "npm start --prefix server",
     "client": "npm start --prefix client",
     "dev": "concurrently \"npm run server\" \"npm run client\"",
-    "start": "concurrently \"npm run server\" \"npm run client\""
+    "start": "node index.js --prefix server"
   },
   "repository": {
     "type": "git",
