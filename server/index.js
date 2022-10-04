@@ -40,7 +40,7 @@ io.on('connection', (socket) => {
     const userDetails = addUser(socket.id, userName);
     socket.emit('logged_in', userDetails);
     io.emit('users', { users });
-    console.log('users: ', users);
+    // console.log('users: ', users);
     // } catch (error) {}
   });
 
@@ -74,7 +74,7 @@ io.on('connection', (socket) => {
     console.log(`User ${socket.id} disconnected. Reason: ${reason}`);
     removeUser(socket.id);
     io.emit('users', { users });
-    console.log('users: ', users);
+    // console.log('users: ', users);
   });
 });
 
