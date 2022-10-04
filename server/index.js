@@ -21,6 +21,7 @@ const io = new Server(server, {
 
 app.get('/', (req, res) => {
   res.write(`<h1>Socket IO Start on port : ${port}</h1>`);
+  res.end();
 });
 
 io.on('connection', (socket) => {
