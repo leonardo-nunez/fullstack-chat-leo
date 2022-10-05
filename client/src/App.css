@@ -18,9 +18,6 @@
   max-width: 30rem;
   width: 90vw;
   height: 95vh;
-  max-height: -moz-available;
-  max-height: -webkit-fill-available;
-  max-height: stretch;
   background: linear-gradient(0deg, var(--apricot) 0%, var(--melon) 100%);
   border-radius: 5px;
 }
