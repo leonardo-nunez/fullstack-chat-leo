@@ -5,8 +5,8 @@ const path = require('path');
 const { createServer } = require('http');
 
 const { Server } = require('socket.io');
-// const cors = require('cors');
-// app.use(cors);
+const cors = require('cors');
+app.use(cors);
 
 const server = createServer(app);
 
@@ -40,12 +40,9 @@ io.on('connection', (socket) => {
   });
 
   socket.on('login', (userName) => {
-    // try {
     const userDetails = addUser(socket.id, userName);
     socket.emit('logged_in', userDetails);
     io.emit('users', { users });
-    // console.log('users: ', users);
-    // } catch (error) {}
   });
 
   socket.on(
@@ -53,7 +50,6 @@ io.on('connection', (socket) => {
     (obj) => (
       console.log(`Sent message: ${obj.message}`),
       clearTimeout(inactivityTimer),
-      // create error message helper function
       (inactivityTimer = setTimeout(() => {
         io.emit('alert_message', {
           alertMessage: `${obj.userName} was disconnected due to inactivity`,
@@ -78,7 +74,6 @@ io.on('connection', (socket) => {
     console.log(`User ${socket.id} disconnected. Reason: ${reason}`);
     removeUser(socket.id);
     io.emit('users', { users });
-    // console.log('users: ', users);
   });
 });
 
@@ -91,7 +86,6 @@ const handleSIG = () => {
   io.emit('disconnect');
 };
 
-// app.listen(PORT, () => console.log(`SERVER RUNNING AT PORT ${PORT}`));
 server.listen(PORT, () => console.log(`SERVER RUNNING AT PORT ${PORT}`));
 
 process.on('SIGINT', handleSIG);

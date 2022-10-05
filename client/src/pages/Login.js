@@ -52,7 +52,7 @@ const Login = ({
       setErrorMessage('');
       navigate('/chat');
     });
-    //FIX THIS!
+    // Solve in better way?
     // socket.on('connect_error', () => {
     //   displayErrorMessage('Server unavailable');
     //   socket.off('connect_error');

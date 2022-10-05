@@ -6,7 +6,6 @@ const UserDisplay = ({ socket }) => {
   useEffect(() => {
     socket.on('users', (userList) => {
       setUserList(userList.users);
-      // console.log('userList set...');
     });
 
     return () => {

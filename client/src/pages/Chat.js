@@ -41,7 +41,6 @@ const Chat = ({
   useEffect(() => {
     socket.on('receive_message', (message) => {
       setMessageList((list) => [...list, message]);
-      // console.log('messageList set');
     });
 
     socket.on('alert_message', (message) => {
@@ -87,7 +86,6 @@ const Chat = ({
     setUserName('');
     setIsLoggedIn(false);
     socket.emit('log_out');
-    // socket.emit('reload_userList');
   };
 
   return (
