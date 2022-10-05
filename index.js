@@ -10,8 +10,8 @@ const { Server } = require('socket.io');
 
 const server = createServer(app);
 
-// app.use(express.static(path.join(__dirname, './client/build')));
-// app.get('/', (req, res, next) => res.sendFile(__dirname + './index.html'));
+app.use(express.static(path.join(__dirname, './client/build')));
+app.get('/', (req, res, next) => res.sendFile(__dirname + './index.html'));
 
 const { inactivityTime, inactivityMS } = require('./chat-config');
 const { users, addUser, removeUser } = require('./users');
@@ -21,10 +21,6 @@ const io = new Server(server, {
     origin: server,
     methods: ['GET', 'POST'],
   },
-});
-
-app.get('/', (req, res) => {
-  res.send('Hello Leo');
 });
 
 io.on('connection', (socket) => {
@@ -95,8 +91,8 @@ const handleSIG = () => {
   io.emit('disconnect');
 };
 
-app.listen(PORT, () => console.log(`SERVER RUNNING AT PORT ${PORT}`));
-// server.listen(PORT, () => console.log(`SERVER RUNNING AT PORT ${PORT}`));
+// app.listen(PORT, () => console.log(`SERVER RUNNING AT PORT ${PORT}`));
+server.listen(PORT, () => console.log(`SERVER RUNNING AT PORT ${PORT}`));
 
 process.on('SIGINT', handleSIG);
 process.on('SIGTERM', handleSIG);
