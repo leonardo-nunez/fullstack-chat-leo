@@ -5,9 +5,10 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "cd client && npm run build && (npm install)",
+    "build": "cd client && npm run build",
     "server": "nodemon index.js",
-    "client": "npm start --prefix client",
+    "heroku-postbuild": "cd client && npm install --only=dev && npm run build",
+    "client": "npm run start --prefix client",
     "dev": "concurrently \"npm run server\" \"npm run client\"",
     "start": "node index.js"
   },
