@@ -23,6 +23,10 @@ const io = new Server(server, {
   },
 });
 
+app.get('/', (req, res) => {
+  res.send('Hello Leo');
+});
+
 io.on('connection', (socket) => {
   console.log(`User connected: ${socket.id}`);
 
@@ -91,8 +95,8 @@ const handleSIG = () => {
   io.emit('disconnect');
 };
 
-// app.listen(PORT, () => console.log(`SERVER RUNNING AT PORT ${PORT}`));
-server.listen(PORT, () => console.log(`SERVER RUNNING AT PORT ${PORT}`));
+app.listen(PORT, () => console.log(`SERVER RUNNING AT PORT ${PORT}`));
+// server.listen(PORT, () => console.log(`SERVER RUNNING AT PORT ${PORT}`));
 
 process.on('SIGINT', handleSIG);
 process.on('SIGTERM', handleSIG);
