@@ -1,6 +1,7 @@
 const express = require('express');
 const app = express();
-const port = process.env.PORT || 3001;
+const PORT = process.env.PORT || 3001;
+const path = require('path');
 const { createServer } = require('http');
 
 const { Server } = require('socket.io');
@@ -8,6 +9,9 @@ const cors = require('cors');
 app.use(cors);
 
 const server = createServer(app);
+
+app.use(express.static(path.join(__dirname, './client/build')));
+app.get('/', (req, res, next) => res.sendFile(__dirname + './index.html'));
 
 const { inactivityTime, inactivityMS } = require('./chat-config');
 const { users, addUser, removeUser } = require('./users');
@@ -19,10 +23,10 @@ const io = new Server(server, {
   },
 });
 
-app.get('/', (req, res) => {
-  res.write(`<h1>Socket IO Start on port : ${port}</h1>`);
-  res.end();
-});
+// app.get('/', (req, res) => {
+//   res.write(`<h1>Socket IO Start on port : ${PORT}</h1>`);
+//   res.end();
+// });
 
 io.on('connection', (socket) => {
   console.log(`User connected: ${socket.id}`);
@@ -88,11 +92,11 @@ const handleSIG = () => {
   // io.emit('server_disconnected', {
   //   errorMessage: 'Server disconnected',
   // });
-  io.socket.server.close();
-  // io.emit('disconnect');
+  // io.socket.server.close();
+  io.emit('disconnect');
 };
 
-server.listen(port, () => console.log(`SERVER RUNNING AT PORT ${port}`));
+server.listen(PORT, () => console.log(`SERVER RUNNING AT PORT ${PORT}`));
 
 process.on('SIGINT', handleSIG);
 process.on('SIGTERM', handleSIG);
