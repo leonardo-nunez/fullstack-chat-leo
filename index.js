@@ -10,6 +10,7 @@ const server = createServer(app);
 
 app.use(express.static(path.join(__dirname, './client/build')));
 app.get('/', (req, res, next) => res.sendFile(__dirname + './index.html'));
+app.get('/*', (req, res, next) => res.redirect('/'));
 
 const { inactivityTime, inactivityMS } = require('./chat-config');
 const { users, addUser, removeUser } = require('./users');
