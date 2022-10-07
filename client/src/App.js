@@ -17,6 +17,7 @@ function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [userName, setUserName] = useState('');
   const [inactive, setInactive] = useState(false);
+  const [isAuth, setIsAuth] = useState(localStorage.getItem('isAuth'));
 
   return (
     <div className="App">
