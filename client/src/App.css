@@ -79,7 +79,7 @@ h6 {
 .settings {
   display: flex;
   justify-content: flex-end;
-  font-size: small;
+  font-size: 0.9rem;
   height: 2rem;
 }
 
@@ -90,7 +90,7 @@ h6 {
 
 .settings__number-input {
   width: 1.7rem;
-  font-size: x-small;
+  font-size: 0.8rem;
   border: none;
   border-radius: 5px;
   box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
@@ -104,11 +104,11 @@ h6 {
 .settings__btn {
   all: unset;
   margin: 0.5rem;
-  font-size: 0.8rem;
+  font-size: 0.9rem;
 }
 
 .settings__btn:hover {
-  font-size: 0.9rem;
+  font-size: 1rem;
 }
 
 .chat__controlls {
@@ -176,7 +176,7 @@ h6 {
   margin: 0 0.5rem;
   border-radius: 5px;
   background-color: var(--tea-green);
-  font-size: x-small;
+  font-size: 0.9rem;
 }
 
 .chat__button:hover,
@@ -248,7 +248,7 @@ h6 {
 .message__footer {
   display: flex;
   justify-content: flex-end;
-  font-size: x-small;
+  font-size: 0.6rem;
   margin: 0 0.5rem;
   color: gray;
 }
@@ -289,5 +289,14 @@ p {
 @media only screen and (max-width: 600px) {
   .App {
     height: 88vh;
+  }
+  .settings {
+    font-size: 0.6rem;
+  }
+  .settings__number-input {
+    font-size: 0.6rem;
+  }
+  .settings__update-btn {
+    font-size: 0.6rem;
   }
 }
