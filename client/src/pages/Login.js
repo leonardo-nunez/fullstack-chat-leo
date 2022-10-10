@@ -15,7 +15,6 @@ const Login = ({
   const navigate = useNavigate();
 
   useEffect(() => {
-    !socket.connected && socket.connect();
     setTimeout(() => {
       !socket.connected && socket.connect();
       socket.emit('login_page_load');
