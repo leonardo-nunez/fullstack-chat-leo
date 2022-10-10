@@ -78,11 +78,8 @@ io.on('connection', (socket) => {
 
 const handleSIG = () => {
   console.log('SIGINT/SIGTERM signal received. Terminating...');
-  // io.emit('server_disconnected', {
-  //   errorMessage: 'Server disconnected',
-  // });
   // io.socket.server.close();
-  io.emit('disconnect');
+  // io.emit('disconnect');
 };
 
 server.listen(PORT, () => console.log(`SERVER RUNNING AT PORT ${PORT}`));
