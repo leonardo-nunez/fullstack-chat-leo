@@ -4,8 +4,9 @@ import { useNavigate } from 'react-router-dom';
 const Chat = ({
   isLoggedIn,
   setIsLoggedIn,
-  userName,
-  setUserName,
+  setIsAuth,
+  user,
+  setUser,
   socket,
   setInactive,
 }) => {
@@ -22,17 +23,17 @@ const Chat = ({
   useEffect(() => {
     const joinMessage = {
       id: Date.now(),
-      userName,
+      userName: user.userName,
       message: 'Login message',
-      alertMessage: userName + ' joined the chat',
+      alertMessage: user.userName + ' joined the chat',
     };
     socket.emit('send_message', joinMessage);
-    setMessageList([{ alertMessage: `Welcome to the chat ${userName}!` }]);
+    setMessageList([{ alertMessage: `Welcome to the chat ${user.userName}!` }]);
 
     return () => {
       socket.off('send_message');
     };
-  }, [socket, userName]);
+  }, [socket, user]);
 
   useEffect(() => {
     bottomRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -68,7 +69,9 @@ const Chat = ({
     e.preventDefault();
     const objToSend = {
       id: Date.now(),
-      userName,
+      googleUid: user.googleUid,
+      userName: user.userName,
+      photo: user.photo,
       message: messageToSend,
       time:
         String(new Date(Date.now()).getHours()).padStart(2, '0') +
@@ -83,7 +86,9 @@ const Chat = ({
   };
 
   const logOut = async () => {
-    setUserName('');
+    setUser({});
+    localStorage.clear();
+    setIsAuth(false);
     setIsLoggedIn(false);
     socket.emit('log_out');
   };
@@ -95,7 +100,7 @@ const Chat = ({
           <div
             key={i}
             className={
-              message.userName === userName
+              message.googleUid === user.googleUid
                 ? 'my-message-box'
                 : 'others-message-box'
             }
@@ -106,18 +111,25 @@ const Chat = ({
               </div>
             ) : (
               <div className="message__wrapper">
-                <h4
-                  className={
-                    message.userName === userName
-                      ? 'chat__message my-message'
-                      : 'chat__message others-message'
-                  }
-                >
-                  {message?.message}
-                </h4>
+                <div className="message__photo-wrapper">
+                  <img
+                    className="message__photo"
+                    src={message.photo}
+                    alt="profile_photo"
+                  />
+                  <h4
+                    className={
+                      message.googleUid === user.googleUid
+                        ? 'chat__message my-message'
+                        : 'chat__message others-message'
+                    }
+                  >
+                    {message?.message}
+                  </h4>
+                </div>
                 <div
                   className={
-                    message.userName === userName
+                    message.googleUid === user.googleUid
                       ? 'message__footer my-footer'
                       : 'message__footer others-footer'
                   }
@@ -125,7 +137,7 @@ const Chat = ({
                   <p
                     className="message__username"
                     style={
-                      message.userName === userName
+                      message.googleUid === user.googleUid
                         ? { display: 'none' }
                         : { display: 'inline' }
                     }

@@ -20,13 +20,19 @@ const UserDisplay = ({ socket }) => {
         !userList.length ? { visibility: 'hidden' } : { visibility: 'visible' }
       }
     >
-      <h5 className="user-list__heading">Userlist:</h5>
+      <h5 className="user-list__heading">Users:</h5>
       <div className="user-list__list">
         {userList.map((user, i) => (
-          <p className="user-list__name" key={i}>
-            {i !== 0 && ', '}
-            {user.userName}
-          </p>
+          <img
+            className="message__photo"
+            key={i}
+            src={user.photo}
+            alt="userlist-img"
+          />
+          // <p className="user-list__name" key={i}>
+          //   {i !== 0 && ', '}
+          //   {user.userName}
+          // </p>
         ))}
       </div>
     </div>
