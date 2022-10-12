@@ -28,11 +28,8 @@ const UserDisplay = ({ socket }) => {
             key={i}
             src={user.photo}
             alt="userlist-img"
+            style={i !== 0 ? { marginLeft: '0.5rem' } : { marginLeft: '0' }}
           />
-          // <p className="user-list__name" key={i}>
-          //   {i !== 0 && ', '}
-          //   {user.userName}
-          // </p>
         ))}
       </div>
     </div>

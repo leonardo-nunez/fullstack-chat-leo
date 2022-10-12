@@ -116,6 +116,7 @@ const Chat = ({
                     className="message__photo"
                     src={message.photo}
                     alt="profile_photo"
+                    style={{ marginRight: '0.5rem' }}
                   />
                   <h4
                     className={

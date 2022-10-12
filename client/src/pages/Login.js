@@ -4,6 +4,9 @@ import { auth, provider } from '../firebase-config';
 import { signInWithPopup } from 'firebase/auth';
 import Settings from '../components/Settings';
 
+import logo from '../assets/images/btn_google_signin_light_normal_web.png';
+// import logoFocused from '../assets/images/btn_google_signin_light_focused_web.png';
+
 const Login = ({
   inactive,
   setInactive,
@@ -91,7 +94,7 @@ const Login = ({
             placeholder="Username..."
           /> */}
           <button type="submit" className="login__button" onClick={logIn}>
-            Sign in with Google
+            <img src={logo} alt="google-login" />
           </button>
         </form>
         <h5 className="login__error-message">{errorMessage}</h5>
