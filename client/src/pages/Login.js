@@ -5,7 +5,6 @@ import { signInWithPopup } from 'firebase/auth';
 import Settings from '../components/Settings';
 
 import logo from '../assets/images/btn_google_signin_light_normal_web.png';
-// import logoFocused from '../assets/images/btn_google_signin_light_focused_web.png';
 
 const Login = ({
   inactive,

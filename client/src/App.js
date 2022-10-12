@@ -8,10 +8,10 @@ import Login from './pages/Login';
 import Chat from './pages/Chat';
 import UserDisplay from './components/UserDisplay';
 
-export const socket = io.connect('http://localhost:3001');
-// export const socket = io.connect('https://fullstack-chat-leo.herokuapp.com/', {
-//   secure: true,
-// });
+// export const socket = io.connect('http://localhost:3001');
+export const socket = io.connect('https://fullstack-chat-leo.herokuapp.com/', {
+  secure: true,
+});
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
