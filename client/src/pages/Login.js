@@ -50,8 +50,6 @@ const Login = ({
 
   const logIn = async (e) => {
     e.preventDefault();
-    if (!user) return displayErrorMessage('Choose a username...');
-
     const googleUser = await signInWithPopup(auth, provider);
     const newUser = {
       googleUid: googleUser.user.uid,
@@ -85,18 +83,11 @@ const Login = ({
     <>
       <div className="login">
         <h1>💬</h1>
-        <form className="login__form" action="submit">
-          {/* <input
-            autoFocus
-            className="login__input"
-            onChange={(e) => setUserName(e.target.value)}
-            type="text"
-            placeholder="Username..."
-          /> */}
-          <button type="submit" className="login__button" onClick={logIn}>
-            <img src={logo} alt="google-login" />
-          </button>
-        </form>
+
+        <button type="submit" className="login__button" onClick={logIn}>
+          <img src={logo} alt="google-login" />
+        </button>
+
         <h5 className="login__error-message">{errorMessage}</h5>
       </div>
       <Settings socket={socket} />
