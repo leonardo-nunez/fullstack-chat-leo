@@ -1,14 +1,20 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { auth, provider } from '../firebase-config';
+import { signInWithPopup } from 'firebase/auth';
 import Settings from '../components/Settings';
+
+import logo from '../assets/images/btn_google_signin_light_normal_web.png';
+// import logoFocused from '../assets/images/btn_google_signin_light_focused_web.png';
 
 const Login = ({
   inactive,
   setInactive,
+  setIsAuth,
   isLoggedIn,
   setIsLoggedIn,
-  userName,
-  setUserName,
+  user,
+  setUser,
   socket,
 }) => {
   const [errorMessage, setErrorMessage] = useState('');
@@ -42,16 +48,26 @@ const Login = ({
     }, 3000);
   };
 
-  const logIn = (e) => {
+  const logIn = async (e) => {
     e.preventDefault();
-    if (!userName) return displayErrorMessage('Choose a username...');
-    socket.emit('login', userName);
+    const googleUser = await signInWithPopup(auth, provider);
+    const newUser = {
+      googleUid: googleUser.user.uid,
+      userName: googleUser.user.displayName,
+      email: googleUser.user.email,
+      photo: googleUser.user.photoURL,
+    };
+    setUser(newUser);
+    socket.emit('login', newUser);
+    localStorage.setItem('isAuth', true);
+    setIsAuth(true);
     socket.on('logged_in', (message) => {
       if (!message.userName) return displayErrorMessage(message.error);
       setIsLoggedIn(true);
       setErrorMessage('');
-      navigate('/chat');
     });
+    navigate('/chat');
+
     // Solve in better way?
     // socket.on('connect_error', () => {
     //   displayErrorMessage('Server unavailable');
@@ -74,18 +90,9 @@ const Login = ({
           <h2>💬💬💬💬</h2>
           <h1>💬</h1>
         </div>
-        <form className="login__form" action="submit">
-          <input
-            autoFocus
-            className="login__input"
-            onChange={(e) => setUserName(e.target.value)}
-            type="text"
-            placeholder="Username..."
-          />
-          <button type="submit" className="login__button" onClick={logIn}>
-            ▶
-          </button>
-        </form>
+        <button type="submit" className="login__button" onClick={logIn}>
+          <img src={logo} alt="google-login" />
+        </button>
         <h5 className="login__error-message">{errorMessage}</h5>
       </div>
       <Settings socket={socket} />

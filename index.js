@@ -38,8 +38,8 @@ io.on('connection', (socket) => {
     io.emit('update_settings', inactiveTime);
   });
 
-  socket.on('login', (userName) => {
-    const userDetails = addUser(socket.id, userName);
+  socket.on('login', async (newUser) => {
+    const userDetails = addUser(socket.id, newUser);
     socket.emit('logged_in', userDetails);
     io.emit('users', { users });
   });
@@ -61,7 +61,7 @@ io.on('connection', (socket) => {
   );
 
   socket.on('log_out', () => {
-    const loggedOutUser = users.find((user) => user.id === socket.id);
+    const loggedOutUser = users.find((user) => user.socketUid === socket.id);
     io.emit('alert_message', {
       alertMessage: loggedOutUser?.userName + ' left the chat',
     });

@@ -8,15 +8,16 @@ import Login from './pages/Login';
 import Chat from './pages/Chat';
 import UserDisplay from './components/UserDisplay';
 
-// export const socket = io.connect('http://localhost:3001');
-export const socket = io.connect('https://fullstack-chat-leo.herokuapp.com/', {
-  secure: true,
-});
+export const socket = io.connect('http://localhost:3001');
+// export const socket = io.connect('https://fullstack-chat-leo.herokuapp.com/', {
+//   secure: true,
+// });
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [userName, setUserName] = useState('');
+  const [user, setUser] = useState({});
   const [inactive, setInactive] = useState(false);
+  const [isAuth, setIsAuth] = useState(localStorage.getItem('isAuth'));
 
   return (
     <div className="App">
@@ -26,12 +27,14 @@ function App() {
           path="/"
           element={
             <Login
+              isAuth={isAuth}
+              setIsAuth={setIsAuth}
               inactive={inactive}
               setInactive={setInactive}
               isLoggedIn={isLoggedIn}
               setIsLoggedIn={setIsLoggedIn}
-              userName={userName}
-              setUserName={setUserName}
+              user={user}
+              setUser={setUser}
               socket={socket}
             />
           }
@@ -42,9 +45,10 @@ function App() {
             <Chat
               isLoggedIn={isLoggedIn}
               setIsLoggedIn={setIsLoggedIn}
+              setIsAuth={setIsAuth}
               socket={socket}
-              userName={userName}
-              setUserName={setUserName}
+              user={user}
+              setUser={setUser}
               setInactive={setInactive}
             />
           }
