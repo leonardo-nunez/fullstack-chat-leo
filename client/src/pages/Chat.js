@@ -27,6 +27,7 @@ const Chat = ({
       message: 'Login message',
       alertMessage: user.userName + ' joined the chat',
     };
+    console.log('user: ', user.userName);
     socket.emit('send_message', joinMessage);
     setMessageList([{ alertMessage: `Welcome to the chat ${user.userName}!` }]);
 
@@ -60,8 +61,8 @@ const Chat = ({
     return () => {
       socket.off('receive_message');
       socket.off('alert_message');
-      socket.off('disconnected');
       socket.off('connect_error');
+      socket.off('inactive');
     };
   }, [socket, setInactive, setIsLoggedIn]);
 
@@ -85,7 +86,7 @@ const Chat = ({
     }
   };
 
-  const logOut = async () => {
+  const logOut = () => {
     setUser({});
     localStorage.clear();
     setIsAuth(false);

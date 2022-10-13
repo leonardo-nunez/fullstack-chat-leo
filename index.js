@@ -78,7 +78,7 @@ io.on('connection', (socket) => {
 
 const handleSIG = () => {
   console.log('SIGINT/SIGTERM signal received. Terminating...');
-  // io.socket.server.close();
+  io.socket.close();
   // io.emit('disconnect');
 };
 
