@@ -139,6 +139,9 @@ const Chat = ({
         <div ref={bottomRef} />
       </div>
       <div className="chat__controlls">
+        <button className="chat__button chat__button--log-out" onClick={logOut}>
+          ✖
+        </button>
         <form className="chat__form" action="submit">
           <input
             autoFocus
@@ -156,9 +159,6 @@ const Chat = ({
             ▶
           </button>
         </form>
-        <button className="chat__button chat__button--log-out" onClick={logOut}>
-          ✖
-        </button>
       </div>
     </div>
   );

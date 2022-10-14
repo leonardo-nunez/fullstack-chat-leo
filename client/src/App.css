@@ -90,7 +90,7 @@ h6 {
 }
 
 .settings__number-input {
-  width: 1.7rem;
+  width: 1.8rem;
   font-size: 0.8rem;
   border: none;
   border-radius: 5px;
@@ -121,23 +121,22 @@ h6 {
 
 .chat__form {
   display: flex;
-  justify-content: center;
+  justify-content: right;
   align-items: center;
   width: 85%;
 }
 
-.chat__input,
-.login__input {
+.chat__input {
   border: none;
   border-radius: 5px;
   box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
-  width: 70%;
+  width: 80%;
   padding: 0 0.5rem;
   height: 2.5rem;
   outline-color: lightgrey;
 }
 
-.login__form {
+/* .login__form {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -145,7 +144,7 @@ h6 {
 
 .login__input {
   width: auto;
-}
+} */
 
 .login__error-message {
   height: 1rem;
