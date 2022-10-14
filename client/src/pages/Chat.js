@@ -73,7 +73,7 @@ const Chat = ({
 
   const logOut = () => {
     setUser({});
-    localStorage.clear();
+    setMessageList([]);
     setIsLoggedIn(false);
     socket.emit('log_out');
   };
