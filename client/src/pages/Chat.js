@@ -10,7 +10,9 @@ const Chat = ({
   setInactive,
 }) => {
   const [messageToSend, setMessageToSend] = useState('');
-  const [messageList, setMessageList] = useState([]);
+  const [messageList, setMessageList] = useState([
+    { alertMessage: `Welcome to the chat ${user.userName}!` },
+  ]);
   const navigate = useNavigate();
 
   const bottomRef = useRef(null);
@@ -18,22 +20,6 @@ const Chat = ({
   useEffect(() => {
     !isLoggedIn && navigate('/');
   }, [isLoggedIn, navigate]);
-
-  useEffect(() => {
-    const joinMessage = {
-      id: Date.now(),
-      userName: user.userName,
-      message: 'Login message',
-      alertMessage: user.userName + ' joined the chat',
-    };
-    console.log('user: ', user.userName);
-    socket.emit('send_message', joinMessage);
-    setMessageList([{ alertMessage: `Welcome to the chat ${user.userName}!` }]);
-
-    return () => {
-      socket.off('send_message');
-    };
-  }, [socket, user]);
 
   useEffect(() => {
     bottomRef.current?.scrollIntoView({ behavior: 'smooth' });

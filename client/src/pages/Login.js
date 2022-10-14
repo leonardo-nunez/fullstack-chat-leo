@@ -11,6 +11,7 @@ const Login = ({
   setInactive,
   isLoggedIn,
   setIsLoggedIn,
+  user,
   setUser,
   socket,
 }) => {
@@ -60,8 +61,9 @@ const Login = ({
       if (!message.userName) return displayErrorMessage(message.error);
       setIsLoggedIn(true);
       setErrorMessage('');
+      sendJoinMessage(message.userName);
+      navigate('/chat');
     });
-    navigate('/chat');
 
     // Solve in better way?
     // socket.on('connect_error', () => {
@@ -72,6 +74,16 @@ const Login = ({
       setTimeout(() => {
         displayErrorMessage('Server unavailable');
       }, 100);
+  };
+
+  const sendJoinMessage = (userName) => {
+    const joinMessage = {
+      id: Date.now(),
+      userName: userName,
+      message: 'Login message',
+      alertMessage: userName + ' joined the chat',
+    };
+    socket.emit('send_message', joinMessage);
   };
 
   return (
