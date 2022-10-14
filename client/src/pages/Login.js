@@ -9,10 +9,8 @@ import logo from '../assets/images/btn_google_signin_light_normal_web.png';
 const Login = ({
   inactive,
   setInactive,
-  setIsAuth,
   isLoggedIn,
   setIsLoggedIn,
-  user,
   setUser,
   socket,
 }) => {
@@ -58,8 +56,6 @@ const Login = ({
     };
     setUser(newUser);
     socket.emit('login', newUser);
-    localStorage.setItem('isAuth', true);
-    setIsAuth(true);
     socket.on('logged_in', (message) => {
       if (!message.userName) return displayErrorMessage(message.error);
       setIsLoggedIn(true);

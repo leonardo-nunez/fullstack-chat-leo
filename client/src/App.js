@@ -17,7 +17,6 @@ function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [user, setUser] = useState({});
   const [inactive, setInactive] = useState(false);
-  const [isAuth, setIsAuth] = useState(localStorage.getItem('isAuth'));
 
   return (
     <div className="App">
@@ -27,8 +26,6 @@ function App() {
           path="/"
           element={
             <Login
-              isAuth={isAuth}
-              setIsAuth={setIsAuth}
               inactive={inactive}
               setInactive={setInactive}
               isLoggedIn={isLoggedIn}
@@ -45,7 +42,6 @@ function App() {
             <Chat
               isLoggedIn={isLoggedIn}
               setIsLoggedIn={setIsLoggedIn}
-              setIsAuth={setIsAuth}
               socket={socket}
               user={user}
               setUser={setUser}

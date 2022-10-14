@@ -4,7 +4,6 @@ import { useNavigate } from 'react-router-dom';
 const Chat = ({
   isLoggedIn,
   setIsLoggedIn,
-  setIsAuth,
   user,
   setUser,
   socket,
@@ -89,7 +88,6 @@ const Chat = ({
   const logOut = () => {
     setUser({});
     localStorage.clear();
-    setIsAuth(false);
     setIsLoggedIn(false);
     socket.emit('log_out');
   };
