@@ -89,6 +89,8 @@ const Login = ({
   return (
     <>
       <div className="login">
+        <h3 className="login__heading">Welcome to</h3>
+        <h1 className="login__heading login__name">ChatUpNow</h1>
         <div className="login__logo">
           <h6>💬💬💬💬💬💬💬💬💬💬💬💬💬💬💬💬💬💬💬💬💬💬💬</h6>
           <h5>💬💬💬💬💬💬💬💬💬💬💬💬💬💬💬💬</h5>

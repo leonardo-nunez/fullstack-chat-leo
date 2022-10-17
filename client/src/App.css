@@ -27,7 +27,6 @@
   padding: 0.5rem;
   border-radius: 5px;
   box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
-  min-height: 2.5rem;
 }
 
 .user-list__heading {
@@ -73,6 +72,18 @@ h6 {
   margin: -5px 0;
 }
 
+.login__heading {
+  font-family: 'Saira Semi Condensed', sans-serif;
+}
+
+.login__name {
+  font-size: 3rem;
+  margin: 0 auto -0.5rem;
+  background: -webkit-linear-gradient(black, rgba(0, 0, 0, 0));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
 .chat {
   max-height: 93%;
 }
@@ -116,7 +127,8 @@ h6 {
   display: flex;
   justify-content: center;
   flex-grow: 2;
-  align-items: center;
+  align-items: flex-end;
+  margin-bottom: 0.5rem;
 }
 
 .chat__form {
