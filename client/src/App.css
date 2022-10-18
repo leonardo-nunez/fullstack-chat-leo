@@ -161,8 +161,7 @@ h6 {
 
 .login__error-message {
   height: 1rem;
-  margin: 0;
-  margin-bottom: 40%;
+  margin: 0.5rem 0 40%;
 }
 
 .login__button {
