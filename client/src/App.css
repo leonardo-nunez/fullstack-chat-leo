@@ -27,6 +27,7 @@
   padding: 0.5rem;
   border-radius: 5px;
   box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+  max-height: 9%;
 }
 
 .user-list__heading {
@@ -85,7 +86,7 @@ h6 {
 }
 
 .chat {
-  max-height: 93%;
+  max-height: 91%;
 }
 
 .settings {
@@ -318,6 +319,12 @@ p {
 @media only screen and (max-width: 600px) {
   .App {
     height: 88vh;
+  }
+  .chat {
+    max-height: 80vh;
+  }
+  .chat__window {
+    max-height: 64vh;
   }
   .settings {
     font-size: 0.6rem;
