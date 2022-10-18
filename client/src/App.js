@@ -50,6 +50,7 @@ function App() {
           }
         />
       </Routes>
+      <div className="mobile-height"></div>
     </div>
   );
 }

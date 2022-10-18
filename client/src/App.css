@@ -312,14 +312,15 @@ p {
 
 @media only screen and (max-width: 600px) {
   .App {
-    height: 88vh;
+    height: 100vh;
+    width: auto;
+    margin: auto;
+    border-radius: 0;
   }
   .chat {
     max-height: 80vh;
   }
-  .chat__window {
-    max-height: 64vh;
-  }
+
   .settings {
     font-size: 0.6rem;
   }
@@ -328,5 +329,8 @@ p {
   }
   .settings__update-btn {
     font-size: 0.6rem;
+  }
+  .mobile-height {
+    height: 12vh;
   }
 }
