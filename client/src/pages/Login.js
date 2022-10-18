@@ -4,7 +4,7 @@ import { auth, provider } from '../firebase-config';
 import { signInWithPopup } from 'firebase/auth';
 import Settings from '../components/Settings';
 
-import logo from '../assets/images/btn_google_signin_light_normal_web.png';
+import GoogleButton from 'react-google-button';
 
 const Login = ({
   inactive,
@@ -99,9 +99,7 @@ const Login = ({
           <h2>💬💬💬💬</h2>
           <h1>💬</h1>
         </div>
-        <button type="submit" className="login__button" onClick={logIn}>
-          <img src={logo} alt="google-login" />
-        </button>
+        <GoogleButton className="login__button" onClick={logIn} type="light" />
         <h5 className="login__error-message">{errorMessage}</h5>
       </div>
       <Settings socket={socket} />

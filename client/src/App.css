@@ -164,15 +164,9 @@ h6 {
   margin: 0;
   margin-bottom: 40%;
 }
+
 .login__button {
-  all: unset;
-}
-.login__button:hover {
-  cursor: pointer;
-  opacity: 0.8;
-}
-.login__button:active {
-  opacity: 0.6;
+  margin: 0 auto;
 }
 
 .chat__button,
