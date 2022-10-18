@@ -333,6 +333,6 @@ p {
     height: 12vh;
   }
   .user-list {
-    min-height: 8vh;
+    min-height: 3.5rem;
   }
 }
