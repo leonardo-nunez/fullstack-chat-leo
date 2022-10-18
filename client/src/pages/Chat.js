@@ -139,8 +139,12 @@ const Chat = ({
         <div ref={bottomRef} />
       </div>
       <div className="chat__controlls">
-        <button className="chat__button chat__button--log-out" onClick={logOut}>
-          ✖
+        <button
+          title="Log out"
+          className="chat__button chat__button--log-out"
+          onClick={logOut}
+        >
+          <span className="material-symbols-outlined">logout</span>
         </button>
         <form className="chat__form" action="submit">
           <input
@@ -156,7 +160,7 @@ const Chat = ({
             className="chat__button chat__button--send"
             onClick={sendMessage}
           >
-            ▶
+            <span className="material-symbols-outlined">send</span>
           </button>
         </form>
       </div>

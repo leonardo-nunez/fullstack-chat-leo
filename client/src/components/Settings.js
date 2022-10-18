@@ -69,7 +69,7 @@ const Settings = ({ socket }) => {
             setSettingsOpen((prevsettingsOpen) => !prevsettingsOpen)
           }
         >
-          ⚙️
+          <span className="material-symbols-outlined outlined">settings</span>
         </button>
       </div>
     </div>
