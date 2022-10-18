@@ -8,23 +8,24 @@ import Login from './pages/Login';
 import Chat from './pages/Chat';
 import UserDisplay from './components/UserDisplay';
 
-export const socket = io.connect(
-  isLocalhost
-    ? 'http://localhost:3001'
-    : 'https://fullstack-chat-leo.herokuapp.com/',
-  {
-    secure: true,
-  }
-);
 // export const socket = io.connect('https://fullstack-chat-leo.herokuapp.com/', {
 //   secure: true,
 // });
 
 const url = window.location.href;
 
-function isLocalhost() {
+const isLocalhost = () => {
   return url.includes('localhost') || url.includes('127.0.0.1');
-}
+};
+
+export const socket = io.connect(
+  isLocalhost()
+    ? 'http://localhost:3001'
+    : 'https://fullstack-chat-leo.herokuapp.com/',
+  {
+    secure: true,
+  }
+);
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
