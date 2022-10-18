@@ -8,10 +8,6 @@ import Login from './pages/Login';
 import Chat from './pages/Chat';
 import UserDisplay from './components/UserDisplay';
 
-// export const socket = io.connect('https://fullstack-chat-leo.herokuapp.com/', {
-//   secure: true,
-// });
-
 const url = window.location.href;
 
 const isLocalhost = () => {
@@ -65,7 +61,6 @@ function App() {
         />
       </Routes>
       <div className="mobile-height"></div>
-      {/* <button onClick={() => console.log(window.location.href)}>local?</button> */}
     </div>
   );
 }
