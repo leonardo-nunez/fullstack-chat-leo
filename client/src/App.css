@@ -333,4 +333,7 @@ p {
   .mobile-height {
     height: 12vh;
   }
+  .user-list {
+    min-height: 8vh;
+  }
 }
