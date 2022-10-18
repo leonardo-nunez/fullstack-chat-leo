@@ -20,7 +20,9 @@ export const socket = io.connect(
 //   secure: true,
 // });
 
-function isLocalhost(url) {
+const url = window.location.href;
+
+function isLocalhost() {
   return url.includes('localhost') || url.includes('127.0.0.1');
 }
 
@@ -62,7 +64,7 @@ function App() {
         />
       </Routes>
       <div className="mobile-height"></div>
-      <button onClick={() => console.log(window.location)}>local?</button>
+      {/* <button onClick={() => console.log(window.location.href)}>local?</button> */}
     </div>
   );
 }
