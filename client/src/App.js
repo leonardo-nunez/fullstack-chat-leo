@@ -8,19 +8,12 @@ import Login from './pages/Login';
 import Chat from './pages/Chat';
 import UserDisplay from './components/UserDisplay';
 
-const url = window.location.href;
-
-const isLocalhost = () => {
-  return url.includes('localhost') || url.includes('127.0.0.1');
-};
+const production = 'https://fullstack-chat-leo.herokuapp.com/';
+const development = 'http://localhost:3001';
 
 export const socket = io.connect(
-  isLocalhost()
-    ? 'http://localhost:3001'
-    : 'https://fullstack-chat-leo.herokuapp.com/',
-  {
-    secure: true,
-  }
+  process.env.NODE_ENV ? production : development,
+  { secure: true }
 );
 
 function App() {
