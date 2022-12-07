@@ -8,11 +8,11 @@ import Login from './pages/Login';
 import Chat from './pages/Chat';
 import UserDisplay from './components/UserDisplay';
 
-const production = 'https://fullstack-chat-leo.herokuapp.com/';
+const production = 'https://chatupnow.onrender.com/';
 const development = 'http://localhost:3001';
 
 export const socket = io.connect(
-  process.env.NODE_ENV ? production : development,
+  process.env.NODE_ENV === production ? production : development,
   { secure: true }
 );
 
@@ -22,11 +22,11 @@ function App() {
   const [inactive, setInactive] = useState(false);
 
   return (
-    <div className="App">
+    <div className='App'>
       <UserDisplay socket={socket} />
       <Routes>
         <Route
-          path="/"
+          path='/'
           element={
             <Login
               inactive={inactive}
@@ -40,7 +40,7 @@ function App() {
           }
         />
         <Route
-          path="/chat"
+          path='/chat'
           element={
             <Chat
               isLoggedIn={isLoggedIn}
@@ -53,7 +53,7 @@ function App() {
           }
         />
       </Routes>
-      <div className="mobile-height"></div>
+      <div className='mobile-height'></div>
     </div>
   );
 }

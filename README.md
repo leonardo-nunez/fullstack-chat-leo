@@ -16,7 +16,7 @@ A fullstack chat app.
 
 ## Demo
 
-https://fullstack-chat-leo.herokuapp.com/
+https://chatupnow.onrender.com/
 
 ## Run Locally
 
