@@ -12,7 +12,7 @@ const production = 'https://chatupnow.onrender.com/';
 const development = 'http://localhost:3001';
 
 export const socket = io.connect(
-  process.env.NODE_ENV === production ? production : development,
+  process.env.NODE_ENV === 'development' ? development : production,
   { secure: true }
 );
 
